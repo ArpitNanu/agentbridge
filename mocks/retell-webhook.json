@@ -1,0 +1,14 @@
+{
+  "event": "call_ended",
+  "call": {
+    "call_id": "retell-call-77c8e-456",
+    "agent_id": "agent-retell-xyz-789",
+    "call_status": "completed",
+    "start_timestamp": 1780654320000,
+    "end_timestamp": 1780654500000,
+    "duration_ms": 180000,
+    "recordingURL": "https://retell-recordings.s3.amazonaws.com/recording-retell.mp3",
+    "transcript": "Agent: Hello, this is Retell support. How can I assist you?\nUser: Hi, I wanted to cancel my monthly subscription.\nAgent: I'm sorry to hear you want to cancel. Can you share why you are choosing to unsubscribe?\nUser: I just don't use it enough to justify the price.\nAgent: Understood. I have successfully canceled your subscription. You won't be charged again.\nUser: Great, thank you. Have a good one.\nAgent: Thank you for your time, goodbye.",
+    "callSummary": "Customer requested subscription cancellation. Agent processed the cancellation and confirmed no further charges will occur."
+  }
+}

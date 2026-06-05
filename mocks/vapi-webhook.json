@@ -1,0 +1,22 @@
+{
+  "message": {
+    "type": "end-of-call-report",
+    "timestamp": "2026-06-05T10:15:30.123Z",
+    "call": {
+      "id": "vapi-call-99b8d-123",
+      "status": "ended",
+      "startedAt": "2026-06-05T10:12:00.000Z",
+      "endedAt": "2026-06-05T10:15:00.000Z",
+      "duration": 180,
+      "cost": 0.45
+    },
+    "artifact": {
+      "recordingUrl": "https://vapi-recordings.s3.amazonaws.com/recording.mp3",
+      "transcript": "Assistant: Hello, welcome to customer service. How can I help you today?\nUser: Hi, yes, I'm calling because I see an extra charge of twenty dollars on my bill. Can you help me get a refund?\nAssistant: I understand you would like a refund for the twenty dollar charge. Let me look up your account details. What is your account number?\nUser: It is nine-eight-seven-six-five.\nAssistant: Thank you. I have verified your account and processed the refund of twenty dollars. You should see it in three business days.\nUser: Perfect, thank you so much! That is all I needed.\nAssistant: You're welcome! Have a great day. Goodbye.\nUser: Bye.",
+      "messages": [
+        { "role": "assistant", "message": "Hello, welcome to customer service. How can I help you today?", "time": 1000 },
+        { "role": "user", "message": "Hi, yes, I'm calling because I see an extra charge of twenty dollars on my bill. Can you help me get a refund?", "time": 5000 }
+      ]
+    }
+  }
+}
