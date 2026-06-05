@@ -6,12 +6,12 @@ import { StandardCall, CallStatus } from "../../types";
 function mapGenericStatus(status?: string): CallStatus {
   if (!status) return "completed";
   const s = status.toString().toLowerCase();
-  
+
   if (s.includes("start")) return "started";
   if (s.includes("progress") || s.includes("connect") || s.includes("active")) return "connected";
   if (s.includes("fail") || s.includes("error") || s.includes("uncompleted")) return "failed";
   if (s.includes("transfer")) return "transfered";
-  
+
   return "completed";
 }
 

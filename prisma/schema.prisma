@@ -1,10 +1,8 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../app/generated/prisma"
 }
 
@@ -14,21 +12,30 @@ datasource db {
 }
 
 model Call {
-  id String @id @default(cuid())
-
-  provider String
-
-  providerCallId String @unique
-
-  status String
-
+  id              String        @id @default(cuid())
+  provider        String        // 'retell' | 'vapi' | 'generic'
+  providerCallId  String        @unique
+  status          String        // 'started' | 'connected' | 'completed' | 'failed' | 'transfered'
   durationSeconds Int?
+  transcript      String?
+  callType        String        @default("unknown") // Defaults to 'unknown' in V1, classified in V2
+  audioMetadata   Json?         // Stores raw timing, silence, and overlap data (parsed in V2)
+  rawPayload      Json          // Stores the entire original webhook request payload
+  startedAt       DateTime?
+  endedAt         DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
 
-  transcript String?
+  analysis        CallAnalysis?
+}
 
-  rawPayload Json
-
+model CallAnalysis {
+  id        String   @id @default(cuid())
+  callId    String   @unique
+  call      Call     @relation(fields: [callId], references: [id], onDelete: Cascade)
+  summary   String
+  outcome   String   // 'resolved' | 'unresolved' | 'escalated' | 'converted'
+  sentiment String   // 'positive' | 'neutral' | 'negative'
+  metrics   Json     @default("{}") // Stores custom metrics and loop detection results (empty in V1, parsed in V2)
   createdAt DateTime @default(now())
-
-  updatedAt DateTime @updatedAt
 }
