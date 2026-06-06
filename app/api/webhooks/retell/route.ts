@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
+import { after } from "next/server";
 import prisma from "@/lib/db";
 import { normalizeRetell } from "@/lib/normalizer/retell";
+import { runCallAnalysis } from "@/lib/analyzers";
 
 export async function POST(request: NextRequest) {
   try {
@@ -45,6 +47,11 @@ export async function POST(request: NextRequest) {
         endedAt: standardCall.endedAt,
         updatedAt: new Date(),
       },
+    });
+
+    // Run the AI analysis pipeline in the background after the response is sent
+    after(async () => {
+      await runCallAnalysis(callRecord.id);
     });
 
     return NextResponse.json(
