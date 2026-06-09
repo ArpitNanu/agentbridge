@@ -1,26 +1,42 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Core App Colors (Locked to Dark Theme) */
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --surface: #141414;
+  --border-subtle: rgba(255, 255, 255, 0.1);
+  
+  /* Semantic Status Colors (Used in Badges) */
+  --color-positive: #4ade80; /* green-400 */
+  --color-negative: #f87171; /* red-400 */
+  --color-warning: #facc15; /* yellow-400 */
+  --color-neutral: #a1a1aa;  /* zinc-400 */
+  --color-converted: #c084fc; /* purple-400 */
+  --color-brand: #3b82f6; /* blue-500 */
 }
 
+/* Tailwind v4 Configuration Block */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  
+  /* Map semantic colors to utility classes (e.g., text-positive, bg-negative) */
+  --color-positive: var(--color-positive);
+  --color-negative: var(--color-negative);
+  --color-warning: var(--color-warning);
+  --color-neutral: var(--color-neutral);
+  --color-converted: var(--color-converted);
+  --color-brand: var(--color-brand);
+  --color-border-subtle: var(--border-subtle);
+  
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), sans-serif;
 }
