@@ -46,7 +46,7 @@ export function OutcomeBadge({ outcome }: { outcome: string }) {
 
 export function ProviderBadge({ provider }: { provider: string }) {
   return (
-    <span className="inline-flex items-center rounded bg-[#1a1a1a] px-2 py-0.5 text-[10px] font-bold text-zinc-300 uppercase tracking-wider border border-white/5">
+    <span className="inline-flex items-center rounded bg-surface px-2 py-0.5 text-[10px] font-bold text-zinc-300 uppercase tracking-wider border border-white/5">
       {provider}
     </span>
   );

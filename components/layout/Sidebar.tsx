@@ -3,7 +3,7 @@ import { LayoutDashboard, Bot, Phone } from "lucide-react";
 
 export function Sidebar() {
   return (
-    <div className="w-64 bg-background border-r border-border-subtle h-screen flex flex-col shrink-0">
+    <div className="w-64 bg-black border-r border-border-subtle h-screen flex flex-col shrink-0">
       <div className="p-6">
         <h1 className="text-xl font-bold text-white flex items-center gap-2">
           <div className="w-4 h-4 bg-brand rounded-sm"></div>
@@ -28,7 +28,7 @@ export function Sidebar() {
 
       <div className="p-4 border-t border-border-subtle">
         <div className="flex items-center gap-3 px-3 py-2">
-          <div className="w-8 h-8 rounded-full bg-blue-900 flex items-center justify-center text-blue-200 text-xs font-bold">
+          <div className="w-8 h-8 rounded-full bg-brand/20 flex items-center justify-center text-brand text-xs font-bold">
             JD
           </div>
           <div>
