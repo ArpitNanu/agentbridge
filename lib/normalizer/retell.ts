@@ -10,6 +10,7 @@ function mapRetellStatus(status: string): CallStatus {
     case "connected":
       return "connected";
     case "completed":
+    case "ended":
       return "completed";
     case "failed":
     case "uncompleted":
@@ -44,12 +45,19 @@ export function normalizeRetell(payload: any): StandardCall {
     endedAt: call.end_timestamp ? new Date(call.end_timestamp) : undefined,
     rawPayload: payload,
     audioMetadata: {
-      recordingUrl: call.recordingURL,
+      recordingUrl: call.recording_url,
       callSummary: call.callSummary,
       agentId: call.agent_id,
       direction: call.direction,
       fromNumber: call.from_number,
       toNumber: call.to_number,
+      // --- Extracted for Phase 2 (Voice Intelligence) ---
+      latency: call.latency,
+      transcriptObject: call.transcript_object,
+      toolCalls: call.tool_calls,
+      callCost: call.call_cost,
+      disconnectionReason: call.disconnection_reason,
+      // --------------------------------------------------
       metadata: call.metadata // Holds other provider-specific data
     }
   };

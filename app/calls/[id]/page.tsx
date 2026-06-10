@@ -13,14 +13,21 @@ function formatDuration(seconds: number | null) {
   return mins > 0 ? `${mins}M ${secs}S` : `${secs}S`;
 }
 
-// Hardcoded transcript fallback as requested by the user
-const HARDCODED_TRANSCRIPT = [
-  { role: "agent" as const, content: "Thank you for calling. I'm your Vapi assistant. How can I help you today?" },
-  { role: "user" as const, content: "Hi, I've been looking at upgrading to your enterprise plan but I honestly can't figure out the pricing. It's all very vague on your website." },
-  { role: "agent" as const, content: "I understand. Our enterprise pricing is customized based on usage. I can share documentation that breaks down the tiers." },
-  { role: "user" as const, content: "I've already read the docs. They don't have actual numbers. I need to know what I'll be charged, not a 'Contact Us' button." },
-  { role: "agent" as const, content: "For exact figures I'd recommend scheduling a call with our sales team." }
-];
+// Helper to parse the raw transcript string into ChatBubble format
+function parseTranscript(rawTranscript: string | null) {
+  if (!rawTranscript) return [];
+  const lines = rawTranscript.split('\n').filter(line => line.trim().length > 0);
+  
+  return lines.map(line => {
+    if (line.toLowerCase().startsWith('agent:')) {
+      return { role: "agent" as const, content: line.substring(6).trim() };
+    } else if (line.toLowerCase().startsWith('user:')) {
+      return { role: "user" as const, content: line.substring(5).trim() };
+    }
+    // Fallback if no prefix is found
+    return { role: "agent" as const, content: line };
+  });
+}
 
 export default async function CallDetailsPage(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
@@ -34,8 +41,8 @@ export default async function CallDetailsPage(props: { params: Promise<{ id: str
     notFound();
   }
 
-  // Use hardcoded transcript
-  const messages = HARDCODED_TRANSCRIPT;
+  // Parse the real transcript from the database
+  const messages = parseTranscript(call.transcript);
 
   return (
     <div className="flex flex-col h-screen w-full overflow-y-auto bg-background p-8">
@@ -120,10 +127,7 @@ export default async function CallDetailsPage(props: { params: Promise<{ id: str
               </div>
             )}
 
-            <div className="text-[10px] font-bold text-zinc-600 uppercase tracking-wider mb-2">Reason for escalation</div>
-            <p className="text-sm text-zinc-400 leading-relaxed">
-              Customer explicitly requested a human agent. Assistant lacked a configured handoff route. No fallback prompt triggered.
-            </p>
+            {/* Reason for escalation will be added in Phase 2 via AI verdicts */}
           </div>
 
           {/* System Metadata Card */}
@@ -165,12 +169,7 @@ export default async function CallDetailsPage(props: { params: Promise<{ id: str
             
             <div className="mt-4 bg-[#0a0a0a] border border-border-subtle rounded-lg p-4 overflow-x-auto">
               <pre className="text-[10px] text-zinc-500 font-mono">
-{`{
-  "call_id": "${call.providerCallId}",
-  "status": "${call.status}",
-  "duration": ${call.durationSeconds},
-  "cost": 0.41
-}`}
+{JSON.stringify(call.rawPayload, null, 2)}
               </pre>
             </div>
           </div>
